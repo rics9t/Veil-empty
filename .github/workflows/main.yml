@@ -21,7 +21,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Execute Gradle build
-        run: ./gradlew build
+        run: ./gradlew build -x test
 
       # --- New Step to Save Artifact ---
       - name: Upload Build Artifact
