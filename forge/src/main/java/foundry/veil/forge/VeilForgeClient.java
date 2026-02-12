@@ -65,10 +65,6 @@ public class VeilForgeClient {
         loader.postEvent(new ForgeVeilRegisterFixedBuffersEvent(ForgeRenderTypeStageHandler::register));
     }
 
-    private static void registerKeys(RegisterKeyMappingsEvent event) {
-        event.register(VeilClient.EDITOR_KEY);
-    }
-
     private static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
         event.registerAbove(VanillaGuiOverlay.HOTBAR.id(), "uitooltip", VeilUITooltipRenderer::renderOverlay);
     }
