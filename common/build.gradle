@@ -35,12 +35,6 @@ dependencies {
 
     implementation "gg.moonflower:molang-compiler:${molang_compiler_version}"
 
-    implementation "io.github.spair:imgui-java-binding:$imgui_version"
-    implementation("io.github.spair:imgui-java-lwjgl3:$imgui_version") {
-        exclude group: 'org.lwjgl'
-        exclude group: 'org.lwjgl.lwjgl'
-    }
-
     // VanillaGradle makes this impossible... https://github.com/SpongePowered/VanillaGradle/commit/ccc45765d9881747b2c922be7a13c453c32ce9ed
     implementation "org.lwjgl:lwjgl-opencl:$lwjgl_version"
     implementation "org.lwjgl:lwjgl-shaderc:$lwjgl_version"

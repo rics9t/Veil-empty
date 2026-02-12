@@ -10,9 +10,7 @@
     "resource.ModNioResourcePackMixin"
   ],
   "client": [
-    "client.KeyboardHandlerMixin",
     "client.MinecraftMixin",
-    "client.MouseHandlerMixin",
     "client.RenderTypeMixin",
     "client.deferred.ModelBlockRendererMixin",
     "client.deferred.ParticleEngineMixin",

@@ -7,7 +7,6 @@ import foundry.veil.api.client.render.VeilRenderSystem;
 import foundry.veil.api.quasar.data.QuasarParticles;
 import foundry.veil.api.quasar.particle.ParticleEmitter;
 import foundry.veil.api.quasar.particle.ParticleSystemManager;
-import foundry.veil.impl.client.imgui.VeilImGuiImpl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -19,14 +18,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
-import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterClientCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.ApiStatus;
-
-import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 
 @ApiStatus.Internal
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, modid = Veil.MODID, value = Dist.CLIENT)
@@ -43,13 +39,6 @@ public class VeilForgeClientEvents {
     public static void tick(TickEvent.LevelTickEvent event) {
         if (event.phase == TickEvent.Phase.START && event.side.isClient()) {
             VeilRenderSystem.renderer().getParticleManager().tick();
-        }
-    }
-
-    @SubscribeEvent
-    public static void keyPressed(InputEvent.Key event) {
-        if (event.getAction() == GLFW_PRESS && VeilClient.EDITOR_KEY.matches(event.getKey(), event.getScanCode())) {
-            VeilImGuiImpl.get().toggle();
         }
     }
 
@@ -75,13 +64,6 @@ public class VeilForgeClientEvents {
             return 1;
         })));
         event.getDispatcher().register(builder);
-    }
-
-    @SubscribeEvent
-    public static void mousePressed(InputEvent.MouseButton.Pre event) {
-        if (event.getAction() == GLFW_PRESS && VeilClient.EDITOR_KEY.matchesMouse(event.getButton())) {
-            VeilImGuiImpl.get().toggle();
-        }
     }
 
     @SubscribeEvent

@@ -1,6 +1,5 @@
 package foundry.veil.api.client.render;
 
-import foundry.veil.api.client.editor.EditorManager;
 import foundry.veil.api.client.render.deferred.VeilDeferredRenderer;
 import foundry.veil.api.client.render.framebuffer.FramebufferManager;
 import foundry.veil.api.client.render.post.PostPipeline;
@@ -11,7 +10,6 @@ import foundry.veil.api.client.render.shader.ShaderModificationManager;
 import foundry.veil.api.client.render.shader.definition.ShaderPreDefinitions;
 import foundry.veil.api.quasar.particle.ParticleSystemManager;
 import foundry.veil.ext.LevelRendererExtension;
-import foundry.veil.impl.client.imgui.VeilImGuiImpl;
 import foundry.veil.mixin.accessor.ReloadableResourceManagerAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
@@ -36,7 +34,6 @@ public class VeilRenderer implements NativeResource {
     private final VeilDeferredRenderer deferredRenderer;
     private final DynamicRenderTypeManager dynamicRenderTypeManager;
     private final ParticleSystemManager quasarParticleManager;
-    private final EditorManager editorManager;
     private final CameraMatrices cameraMatrices;
     private final GuiInfo guiInfo;
 
@@ -51,7 +48,6 @@ public class VeilRenderer implements NativeResource {
         this.deferredRenderer = new VeilDeferredRenderer(deferredShaderManager, this.shaderPreDefinitions, this.framebufferManager, this.postProcessingManager);
         this.dynamicRenderTypeManager = new DynamicRenderTypeManager();
         this.quasarParticleManager = new ParticleSystemManager();
-        this.editorManager = new EditorManager(resourceManager);
         this.cameraMatrices = new CameraMatrices();
         this.guiInfo = new GuiInfo();
 
@@ -124,13 +120,6 @@ public class VeilRenderer implements NativeResource {
     }
 
     /**
-     * @return The manager for all editors
-     */
-    public EditorManager getEditorManager() {
-        return this.editorManager;
-    }
-
-    /**
      * @return The camera matrices instance
      */
     public CameraMatrices getCameraMatrices() {
@@ -142,13 +131,6 @@ public class VeilRenderer implements NativeResource {
      */
     public GuiInfo getGuiInfo() {
         return this.guiInfo;
-    }
-
-    /**
-     * @return Whether ImGui can be used
-     */
-    public static boolean hasImGui() {
-        return VeilImGuiImpl.get() instanceof VeilImGuiImpl;
     }
 
     /**

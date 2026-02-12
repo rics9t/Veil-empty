@@ -61,21 +61,8 @@ dependencies {
     modCompileOnly "maven.modrinth:sodium:mc1.20.1-0.5.3"
     modCompileOnly "maven.modrinth:iris:1.6.11+1.20.1"
     modCompileOnly "maven.modrinth:replaymod:1.20.1-2.6.15"
-//    modRuntimeOnly "maven.modrinth:sodium:mc1.20.1-0.5.3"
-//    modRuntimeOnly "maven.modrinth:iris:1.6.11+1.20.1"
-//    modRuntimeOnly "maven.modrinth:replaymod:1.20.1-2.6.15"
 
     api(include("gg.moonflower:molang-compiler:${molang_compiler_version}"))
-
-    api(include("io.github.spair:imgui-java-binding:$imgui_version"))
-    api(include(("io.github.spair:imgui-java-lwjgl3:$imgui_version"))) {
-        exclude group: 'org.lwjgl'
-        exclude group: 'org.lwjgl.lwjgl'
-    }
-
-    runtimeOnly(include("io.github.spair:imgui-java-natives-linux:$imgui_version"))
-    runtimeOnly(include("io.github.spair:imgui-java-natives-macos-ft:$imgui_version"))
-    runtimeOnly(include("io.github.spair:imgui-java-natives-windows:$imgui_version"))
 
     api(include("org.lwjgl:lwjgl-opencl:$lwjgl_version")) {
         transitive false
@@ -102,17 +89,6 @@ tasks.named("sourcesJar", Jar) {
 shadowJar {
     archiveClassifier = 'dev'
     configurations = [project.configurations.shade]
-//    relocate "org.objectweb.asm", "${project.group}.lib.asm"
-//    relocate "org.lwjgl.opencl", "${project.group}.lib.opencl"
-//    relocate "gg.moonflower.molangcompiler", "${project.group}.lib.molangcompiler"
-//    relocate "imgui", "${project.group}.lib.imgui"
-//    relocate "io.imgui", "${project.group}.lib.imgui-natives"
-//    relocate "io.github.spair:imgui-java-binding:$imgui_version", "${project.group}.relocated.imgui-java-binding"
-//    relocate "io.github.spair:imgui-java-lwjgl3:$imgui_version", "${project.group}.relocated.imgui-java-lwjgl3"
-//    relocate "io.github.spair:imgui-java-natives-linux:$imgui_version", "${project.group}.relocated.imgui-java-natives-linux"
-//    relocate "io.github.spair:imgui-java-natives-windows:$imgui_version", "${project.group}.relocated.imgui-java-natives-windows"
-//    relocate "io.github.spair:imgui-java-natives-macos:$imgui_version", "${project.group}.relocated.imgui-java-natives-macos"
-//    relocate ":imgui-binding-natives-macosarm64-1.86.11", "${project.group}.relocated.imgui-java-natives-macosarm64"
 }
 
 remapJar {

@@ -10,7 +10,6 @@ import foundry.veil.api.client.render.shader.definition.ShaderBlock;
 import foundry.veil.api.client.render.shader.program.ShaderProgram;
 import foundry.veil.api.opencl.VeilOpenCL;
 import foundry.veil.ext.VertexBufferExtension;
-import foundry.veil.impl.client.imgui.VeilImGuiImpl;
 import foundry.veil.impl.client.render.pipeline.VeilUniformBlockState;
 import foundry.veil.impl.client.render.shader.ShaderProgramImpl;
 import net.minecraft.client.Minecraft;
@@ -247,7 +246,6 @@ public final class VeilRenderSystem {
         }
 
         renderer = new VeilRenderer(resourceManager);
-        VeilImGuiImpl.init(client.getWindow().getWindow());
 
         Tesselator tesselator = RenderSystem.renderThreadTesselator();
         BufferBuilder bufferBuilder = tesselator.getBuilder();
@@ -702,12 +700,10 @@ public final class VeilRenderSystem {
 
     @ApiStatus.Internal
     public static void beginFrame() {
-        VeilImGuiImpl.get().beginFrame();
     }
 
     @ApiStatus.Internal
     public static void endFrame() {
-        VeilImGuiImpl.get().endFrame();
         renderer.getFramebufferManager().clear();
         UNIFORM_BLOCK_STATE.clear();
     }
@@ -726,7 +722,6 @@ public final class VeilRenderSystem {
 
     @ApiStatus.Internal
     public static void close() {
-        VeilImGuiImpl.get().free();
         VeilOpenCL.tryFree();
         if (renderer != null) {
             renderer.free();

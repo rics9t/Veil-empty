@@ -4,12 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import foundry.veil.api.quasar.fx.Trail;
 import foundry.veil.api.util.CodecUtil;
-import imgui.ImGui;
-import imgui.flag.ImGuiColorEditFlags;
-import imgui.type.ImBoolean;
-import imgui.type.ImFloat;
-import imgui.type.ImInt;
-import imgui.type.ImString;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector4f;
@@ -134,41 +128,6 @@ public class TrailSettings {
 
     public ResourceLocation getTrailTexture() {
         return this.trailTexture;
-    }
-
-    public void renderImGuiSettings() {
-        ImString trailTextureString = new ImString(this.trailTexture.toString());
-        ImGui.inputText("Trail Texture" + this.hashCode(), trailTextureString);
-        this.trailTexture = new ResourceLocation(trailTextureString.get());
-        ImInt trailFrequencyInt = new ImInt(this.trailFrequency);
-        ImGui.inputInt("Trail Frequency" + this.hashCode(), trailFrequencyInt);
-        this.trailFrequency = trailFrequencyInt.get();
-        ImInt trailLengthInt = new ImInt(this.trailLength);
-        ImGui.inputInt("Trail Length" + this.hashCode(), trailLengthInt);
-        this.trailLength = trailLengthInt.get();
-        float[] trailColorVector4f = new float[]{this.trailColor.x(), this.trailColor.y(), this.trailColor.z(), this.trailColor.w()};
-        ImGui.colorEdit4("Trail Color" + this.hashCode(), trailColorVector4f, ImGuiColorEditFlags.AlphaBar | ImGuiColorEditFlags.AlphaPreview);
-        this.trailColor = new Vector4f(trailColorVector4f[0], trailColorVector4f[1], trailColorVector4f[2], trailColorVector4f[3]);
-        if (ImGui.beginCombo("Tiling Mode" + this.hashCode(), this.tilingMode.name())) {
-            ImGui.pushItemWidth(-1);
-            Trail.TilingMode[] tilingModes = Trail.TilingMode.values();
-            for (Trail.TilingMode tilingMode : tilingModes) {
-                if (ImGui.selectable(tilingMode.name() + this.hashCode())) {
-                    this.tilingMode = tilingMode;
-                }
-            }
-            ImGui.popItemWidth();
-            ImGui.endCombo();
-        }
-        ImBoolean billboardBoolean = new ImBoolean(this.billboard);
-        ImGui.checkbox("Billboard" + this.hashCode(), billboardBoolean);
-        this.billboard = billboardBoolean.get();
-        ImBoolean parentRotationBoolean = new ImBoolean(this.parentRotation);
-        ImGui.checkbox("Parent Rotation" + this.hashCode(), parentRotationBoolean);
-        this.parentRotation = parentRotationBoolean.get();
-        ImFloat trailWidthModifierFloat = new ImFloat(this.trailWidthModifierFloat);
-        ImGui.inputFloat("Trail Width Modifier" + this.hashCode(), trailWidthModifierFloat);
-        this.trailWidthModifierFloat = trailWidthModifierFloat.get();
     }
 
     @FunctionalInterface

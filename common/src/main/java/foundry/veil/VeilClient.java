@@ -1,21 +1,15 @@
 package foundry.veil;
 
-import com.mojang.blaze3d.platform.InputConstants;
-import foundry.veil.api.client.editor.EditorManager;
 import foundry.veil.api.client.registry.*;
 import foundry.veil.api.client.render.VeilRenderSystem;
-import foundry.veil.api.client.render.VeilRenderer;
 import foundry.veil.api.client.render.deferred.VeilDeferredRenderer;
 import foundry.veil.api.event.VeilRenderLevelStageEvent;
 import foundry.veil.api.quasar.data.ParticleModuleTypeRegistry;
 import foundry.veil.api.quasar.registry.EmitterShapeRegistry;
 import foundry.veil.api.quasar.registry.RenderStyleRegistry;
-import foundry.veil.impl.client.editor.*;
-import foundry.veil.impl.client.imgui.VeilImGuiImpl;
 import foundry.veil.impl.resource.VeilResourceManagerImpl;
 import foundry.veil.platform.VeilClientPlatform;
 import foundry.veil.platform.VeilEventPlatform;
-import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.toasts.SystemToast;
 import net.minecraft.client.renderer.RenderStateShard;
@@ -31,12 +25,9 @@ public class VeilClient {
 
     private static final VeilClientPlatform PLATFORM = ServiceLoader.load(VeilClientPlatform.class).findFirst().orElseThrow(() -> new RuntimeException("Veil expected client platform implementation"));
     private static final VeilResourceManagerImpl RESOURCE_MANAGER = new VeilResourceManagerImpl();
-    public static final KeyMapping EDITOR_KEY = new KeyMapping("key.veil.editor", InputConstants.Type.KEYSYM, InputConstants.KEY_F6, "key.categories.veil");
 
     @ApiStatus.Internal
     public static void init() {
-        VeilImGuiImpl.setImGuiPath();
-
         VeilEventPlatform.INSTANCE.onFreeNativeResources(() -> {
             VeilRenderSystem.close();
             RESOURCE_MANAGER.free();
@@ -47,23 +38,6 @@ public class VeilClient {
             }
 
             RESOURCE_MANAGER.addVeilLoaders(renderer);
-            if (VeilRenderer.hasImGui()) {
-                EditorManager editorManager = renderer.getEditorManager();
-
-                // debug editors
-                editorManager.add(new DemoEditor());
-                editorManager.add(new PostEditor());
-                if (Veil.DEBUG) {
-                    editorManager.add(new ShaderEditor());
-                }
-                editorManager.add(new TextureEditor());
-                editorManager.add(new OpenCLEditor());
-                editorManager.add(new DeviceInfoViewer());
-                editorManager.add(new DeferredEditor());
-                editorManager.add(new LightEditor());
-                editorManager.add(new FramebufferEditor());
-                editorManager.add(new ResourceManagerEditor());
-            }
             glEnable(GL_DEPTH_CLAMP); // TODO add config option
         });
 

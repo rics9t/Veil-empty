@@ -1,9 +1,6 @@
 package foundry.veil.api.resource;
 
 import foundry.veil.Veil;
-import foundry.veil.api.client.imgui.VeilImGuiUtil;
-import imgui.ImGui;
-import imgui.flag.ImGuiCol;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import org.apache.commons.io.IOUtils;
@@ -15,7 +12,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.nio.file.WatchEvent;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
@@ -23,25 +19,6 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 
 public interface VeilResource<T extends VeilResource<?>> {
-
-    /**
-     * Rebders this resource into the resource panel.
-     *
-     * @param dragging Whether the user is dragging the resource
-     */
-    default void render(boolean dragging) {
-        VeilImGuiUtil.icon(this.getIconCode());
-        ImGui.sameLine();
-
-        VeilResourceInfo resourceInfo = this.resourceInfo();
-        ImGui.pushStyleColor(ImGuiCol.Text, resourceInfo.isStatic() ? 0xFFAAAAAA : 0xFFFFFFFF);
-        if (dragging) {
-            VeilImGuiUtil.resourceLocation(resourceInfo.location());
-        } else {
-            ImGui.text(resourceInfo.fileName());
-        }
-        ImGui.popStyleColor();
-    }
 
     /**
      * Called from the watcher thread when this resource updates on disc.
@@ -71,11 +48,6 @@ public interface VeilResource<T extends VeilResource<?>> {
     VeilResourceInfo resourceInfo();
 
     /**
-     * @return All actions that can be performed on this resource
-     */
-    List<VeilResourceAction<T>> getActions();
-
-    /**
      * @return If this resource can be hot-reloaded
      */
     boolean canHotReload();
@@ -101,9 +73,4 @@ public interface VeilResource<T extends VeilResource<?>> {
             IOUtils.copyLarge(is, os);
         }
     }
-
-    /**
-     * Gets the icon code for this resource (ex. 0xED0F)
-     */
-    int getIconCode();
 }

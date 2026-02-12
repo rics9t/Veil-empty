@@ -1,11 +1,6 @@
 package foundry.veil.api.client.render.deferred.light;
 
-import foundry.veil.api.client.editor.EditorAttributeProvider;
 import foundry.veil.api.client.registry.LightTypeRegistry;
-import imgui.ImGui;
-import imgui.flag.ImGuiDataType;
-import imgui.type.ImDouble;
-import imgui.type.ImFloat;
 import net.minecraft.client.Camera;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
@@ -14,7 +9,7 @@ import org.joml.*;
 import java.lang.Math;
 import java.nio.ByteBuffer;
 
-public class AreaLight extends Light implements InstancedLight, PositionedLight<AreaLight>, EditorAttributeProvider {
+public class AreaLight extends Light implements InstancedLight, PositionedLight<AreaLight> {
 
     private static final float MAX_ANGLE_SIZE = (float) (65535 / 2 / Math.PI);
 
@@ -181,72 +176,5 @@ public class AreaLight extends Light implements InstancedLight, PositionedLight<
         light.distance = this.distance;
         light.markDirty();
         return light;
-    }
-
-    @Override
-    public void renderImGuiAttributes() {
-        Vector3f orientationAngles = this.orientation.getEulerAnglesXYZ(new Vector3f());
-
-        float[] editSize = new float[]{this.size.x(), this.size.y()};
-
-        ImDouble editX = new ImDouble(this.position.x());
-        ImDouble editY = new ImDouble(this.position.y());
-        ImDouble editZ = new ImDouble(this.position.z());
-
-        float[] editXRot = new float[]{orientationAngles.x()};
-        float[] editYRot = new float[]{orientationAngles.y()};
-        float[] editZRot = new float[]{orientationAngles.z()};
-
-        float[] editAngle = new float[]{this.angle};
-        ImFloat editDistance = new ImFloat(this.distance);
-
-        if (ImGui.dragFloat2("size", editSize, 0.02F, 0.0001F)) {
-            this.setSize(editSize[0], editSize[1]);
-        }
-
-        float totalWidth = ImGui.calcItemWidth();
-        ImGui.pushItemWidth(totalWidth / 3.0F - (ImGui.getStyle().getItemInnerSpacingX() * 0.58F));
-        if (ImGui.dragScalar("##x", ImGuiDataType.Double, editX, 0.02F)) {
-            this.setPosition(editX.get(), this.position.y(), this.position.z());
-        }
-        ImGui.sameLine(0, ImGui.getStyle().getItemInnerSpacingX());
-        if (ImGui.dragScalar("##y", ImGuiDataType.Double, editY, 0.02F)) {
-            this.setPosition(this.position.x(), editY.get(), this.position.z());
-        }
-        ImGui.sameLine(0, ImGui.getStyle().getItemInnerSpacingX());
-        if (ImGui.dragScalar("##z", ImGuiDataType.Double, editZ, 0.02F)) {
-            this.setPosition(this.position.x(), this.position.y(), editZ.get());
-        }
-
-        ImGui.popItemWidth();
-        ImGui.sameLine(0, ImGui.getStyle().getItemInnerSpacingX());
-        ImGui.text("position");
-
-        ImGui.pushItemWidth(totalWidth / 3.0F - (ImGui.getStyle().getItemInnerSpacingX() * 0.58F));
-        if (ImGui.sliderAngle("##xrot", editXRot)) {
-            this.setOrientation(new Quaternionf().rotationXYZ(editXRot[0], orientationAngles.y(), orientationAngles.z()));
-        }
-        ImGui.sameLine(0, ImGui.getStyle().getItemInnerSpacingX());
-        if (ImGui.sliderAngle("##yrot", editYRot)) {
-            this.setOrientation(new Quaternionf().rotationXYZ(orientationAngles.x(), editYRot[0], orientationAngles.z()));
-        }
-        ImGui.sameLine(0, ImGui.getStyle().getItemInnerSpacingX());
-        if (ImGui.sliderAngle("##zrot", editZRot)) {
-            this.setOrientation(new Quaternionf().rotationXYZ(orientationAngles.x(), orientationAngles.y(), editZRot[0]));
-        }
-
-        ImGui.popItemWidth();
-        ImGui.sameLine(0, ImGui.getStyle().getItemInnerSpacingX());
-        ImGui.text("orientation");
-
-        if (ImGui.sliderAngle("##angle", editAngle, 0.0F, 180.0F, "%.1f")) {
-            this.setAngle(editAngle[0]);
-        }
-        ImGui.sameLine(0, ImGui.getStyle().getItemInnerSpacingX());
-        ImGui.text("angle");
-
-        if (ImGui.dragScalar("distance", ImGuiDataType.Float, editDistance, 0.02F, 0.0F)) {
-            this.setDistance(editDistance.get());
-        }
     }
 }
