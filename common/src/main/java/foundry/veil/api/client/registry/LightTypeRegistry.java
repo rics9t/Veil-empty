@@ -4,7 +4,6 @@ import foundry.veil.Veil;
 import foundry.veil.api.client.render.deferred.light.*;
 import foundry.veil.api.client.render.deferred.light.renderer.IndirectLightRenderer;
 import foundry.veil.api.client.render.deferred.light.renderer.LightTypeRenderer;
-import foundry.veil.impl.client.editor.LightEditor;
 import foundry.veil.impl.client.render.deferred.light.AreaLightRenderer;
 import foundry.veil.impl.client.render.deferred.light.DirectionalLightRenderer;
 import foundry.veil.impl.client.render.deferred.light.IndirectPointLightRenderer;
@@ -68,7 +67,7 @@ public class LightTypeRegistry {
     }
 
     /**
-     * Creates debug lights for the {@link LightEditor}.
+     * Creates debug lights for the Light Editor.
      */
     @FunctionalInterface
     public interface DebugLightFactory {

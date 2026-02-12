@@ -4,22 +4,14 @@ import foundry.veil.api.client.render.VeilRenderSystem;
 import foundry.veil.api.client.render.shader.CompiledShader;
 import foundry.veil.api.client.render.shader.ShaderManager;
 import foundry.veil.api.client.render.shader.program.ShaderProgram;
-import foundry.veil.api.resource.VeilResourceAction;
 import foundry.veil.api.resource.VeilResourceInfo;
-import foundry.veil.impl.resource.action.TextEditAction;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public record VeilShaderIncludeResource(VeilResourceInfo resourceInfo) implements VeilShaderResource<VeilShaderIncludeResource> {
-
-    @Override
-    public List<VeilResourceAction<VeilShaderIncludeResource>> getActions() {
-        return List.of(new TextEditAction<>());
-    }
 
     @Override
     public boolean canHotReload() {
