@@ -41,7 +41,6 @@ public class VeilForgeClient {
         VeilClient.init();
 
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        modEventBus.addListener(VeilForgeClient::registerKeys);
         modEventBus.addListener(VeilForgeClient::registerGuiOverlays);
         modEventBus.addListener(VeilForgeClient::registerListeners);
         modEventBus.addListener(VeilForgeClient::registerShaders);
