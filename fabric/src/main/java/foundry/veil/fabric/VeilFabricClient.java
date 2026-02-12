@@ -82,8 +82,6 @@ public class VeilFabricClient implements ClientModInitializer {
             });
         }
 
-        KeyBindingHelper.registerKeyBinding(VeilClient.EDITOR_KEY);
-
         // Register test resource pack
         ModContainer container = FabricLoader.getInstance().getModContainer(Veil.MODID).orElseThrow();
         VeilBuiltinPacks.registerPacks((id, defaultEnabled) -> ResourceManagerHelper.registerBuiltinResourcePack(id, container, defaultEnabled ? ResourcePackActivationType.DEFAULT_ENABLED : ResourcePackActivationType.NORMAL));
