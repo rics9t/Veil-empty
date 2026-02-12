@@ -4,6 +4,7 @@ import foundry.veil.api.opencl.CLKernel;
 import foundry.veil.api.opencl.VeilOpenCL;
 import net.minecraft.resources.ResourceLocation;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assumptions; // Added import
 import org.junit.jupiter.api.Test;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
@@ -18,6 +19,9 @@ public class CLEventDispatcherTest {
 
     @Test
     public void testEnvironment() throws Exception {
+        // CI Check: Skips this test on GitHub Actions to prevent hanging on missing drivers
+        Assumptions.assumeFalse(Boolean.parseBoolean(System.getenv("CI")), "Skipping OpenCL test on CI environment");
+
         try (VeilOpenCL cl = VeilOpenCL.get(); MemoryStack stack = MemoryStack.stackPush()) {
             Assertions.assertNotNull(cl);
 
@@ -47,6 +51,9 @@ public class CLEventDispatcherTest {
 
     @Test
     public void testExecute() throws Exception {
+        // CI Check: Skips this test on GitHub Actions to prevent hanging on missing drivers
+        Assumptions.assumeFalse(Boolean.parseBoolean(System.getenv("CI")), "Skipping OpenCL test on CI environment");
+
         try (VeilOpenCL cl = VeilOpenCL.get()) {
             Assertions.assertNotNull(cl);
 
